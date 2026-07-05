@@ -1,26 +1,50 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Brand palette — sampled from the Durian Academy logo: olive green + ochre gold */
+  --color-cream: #fbf7ef;
+  --color-cream-deep: #f3ecdc;
+  --color-ink: #222a12;
+  --color-ink-soft: #4a5233;
+
+  --color-leaf-50: #eff1e7;
+  --color-leaf-100: #dce1cb;
+  --color-leaf-200: #bcc59c;
+  --color-leaf-300: #93a06a;
+  --color-leaf-400: #6b7842;
+  --color-leaf-500: #4d5a29;
+  --color-leaf-600: #303c18; /* brand primary */
+  --color-leaf-700: #26300f;
+  --color-leaf-800: #1a220c;
+
+  --color-gold-300: #c3a743;
+  --color-gold-400: #a5871f;
+  --color-gold-500: #78600c; /* brand gold */
+  --color-gold-600: #5f4c0a;
+
+  --font-sans: var(--font-sans), system-ui, sans-serif;
+  --font-display: var(--font-display), Georgia, serif;
+
+  --shadow-card: 0 1px 2px rgba(20, 35, 27, 0.04), 0 12px 32px -12px rgba(20, 35, 27, 0.18);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Subtle tropical gradient helper for the hero */
+.bg-hero {
+  background:
+    radial-gradient(60% 55% at 85% 10%, rgba(120, 96, 12, 0.14), transparent 60%),
+    radial-gradient(70% 60% at 5% 90%, rgba(48, 60, 24, 0.12), transparent 55%),
+    var(--color-cream);
 }
