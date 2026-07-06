@@ -46,6 +46,14 @@ export const programs = [
   },
 ];
 
+// Quick, scannable facts shown in the hero card. Edit these to match reality.
+export const highlights = [
+  { icon: "spark", label: "Next intake", value: "Enrolling now" },
+  { icon: "group", label: "Class size", value: "Small groups" },
+  { icon: "academic", label: "Format", value: "In-person & online" },
+  { icon: "trophy", label: "Free", value: "Diagnostic assessment" },
+];
+
 export const stats = [
   { value: "500+", label: "Students guided" },
   { value: "5", label: "Curricula covered" },

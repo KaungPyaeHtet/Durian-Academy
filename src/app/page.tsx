@@ -5,6 +5,7 @@ import { LogoMark } from "@/components/Logo";
 import {
   site,
   programs,
+  highlights,
   stats,
   reasons,
   steps,
@@ -79,33 +80,46 @@ function HeroCard() {
   return (
     <div className="relative">
       <div className="rounded-3xl border border-leaf-100 bg-white/80 p-6 shadow-card backdrop-blur">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <LogoMark size={28} className="h-7 w-7" />
+        <div className="flex items-center gap-2.5">
+          <LogoMark size={30} />
+          <div>
             <p className="font-display text-sm font-semibold text-leaf-600">
-              This term at Durian
+              {site.name}
             </p>
+            <p className="text-xs text-ink-soft">At a glance</p>
           </div>
-          <span className="rounded-full bg-gold-500/15 px-2.5 py-1 text-xs font-semibold text-gold-600">
-            Enrolling now
+          <span className="ml-auto flex items-center gap-1.5 rounded-full bg-gold-500/15 px-2.5 py-1 text-xs font-semibold text-gold-600">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-gold-500" />
+            Enrolling
           </span>
         </div>
-        <div className="mt-5 space-y-3">
-          {programs.slice(0, 5).map((p) => (
+
+        <div className="mt-5 grid grid-cols-2 gap-3">
+          {highlights.map((h) => (
             <div
-              key={p.code}
-              className="flex items-center justify-between rounded-xl border border-leaf-50 bg-cream/60 px-4 py-3"
+              key={h.label}
+              className="rounded-xl border border-leaf-50 bg-cream/60 p-4"
             >
-              <div className="flex items-center gap-3">
-                <span className="flex h-9 w-14 items-center justify-center rounded-lg bg-leaf-600 text-xs font-bold text-cream">
-                  {p.code}
-                </span>
-                <span className="text-sm font-medium text-ink">{p.name}</span>
-              </div>
-              <Icon name="spark" className="h-4 w-4 text-gold-500" />
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-leaf-50 text-leaf-600">
+                <Icon name={h.icon} className="h-4 w-4" />
+              </span>
+              <p className="mt-3 text-[11px] font-medium uppercase tracking-wide text-ink-soft">
+                {h.label}
+              </p>
+              <p className="mt-0.5 text-sm font-semibold text-ink">{h.value}</p>
             </div>
           ))}
         </div>
+
+        <a
+          href={site.facebook}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-leaf-600 px-4 py-3 text-sm font-semibold text-cream transition-colors hover:bg-leaf-700"
+        >
+          <FacebookIcon className="h-4 w-4" />
+          Book a free assessment
+        </a>
       </div>
       <div className="pointer-events-none absolute -right-3 -top-3 h-16 w-16 rounded-full bg-gold-300/40 blur-xl" />
     </div>
@@ -160,47 +174,54 @@ function Programs() {
         intro="Whether the goal is a top university abroad or the matriculation exam at home, we prepare students for the qualification that matters to them."
       />
       <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {programs.map((p) => (
+        {programs.map((p, i) => (
           <article
             key={p.code}
-            className="group flex flex-col rounded-2xl border border-leaf-100 bg-white p-6 shadow-card transition-transform hover:-translate-y-1"
+            className="group relative flex flex-col overflow-hidden rounded-2xl border border-leaf-100 bg-white p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-gold-400/40"
           >
-            <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-leaf-600 font-display text-sm font-bold text-cream">
+            {/* accent bar that fills in on hover */}
+            <span className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gold-400 transition-transform duration-300 group-hover:scale-x-100" />
+            <div className="flex items-start justify-between">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-leaf-50 font-display text-lg font-semibold tabular-nums text-leaf-600 transition-colors group-hover:bg-leaf-600 group-hover:text-cream">
+                0{i + 1}
+              </span>
+              <span className="rounded-full border border-gold-400/50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-gold-600">
                 {p.code}
               </span>
-              <h3 className="font-display text-lg font-semibold text-ink">
-                {p.name}
-              </h3>
             </div>
+            <h3 className="mt-5 font-display text-xl font-semibold text-ink">
+              {p.name}
+            </h3>
+            <span className="mt-3 block h-px w-10 bg-gold-400/70" />
             <p className="mt-4 flex-1 text-sm leading-relaxed text-ink-soft">
               {p.blurb}
             </p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {p.tags.map((t) => (
-                <span
-                  key={t}
-                  className="rounded-full bg-leaf-50 px-2.5 py-1 text-xs font-medium text-leaf-600"
-                >
+            <div className="mt-6 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs font-medium text-leaf-500">
+              {p.tags.map((t, ti) => (
+                <span key={t} className="flex items-center gap-2.5">
+                  {ti > 0 && (
+                    <span className="h-1 w-1 rounded-full bg-gold-400" />
+                  )}
                   {t}
                 </span>
               ))}
             </div>
           </article>
         ))}
-        <div className="flex flex-col justify-center rounded-2xl border border-dashed border-leaf-200 bg-leaf-50/50 p-6">
-          <p className="font-display text-lg font-semibold text-leaf-700">
+        <div className="flex flex-col justify-center rounded-2xl bg-leaf-600 p-7 text-cream shadow-card">
+          <Icon name="spark" className="h-6 w-6 text-gold-300" />
+          <p className="mt-4 font-display text-xl font-semibold">
             Not sure which fits?
           </p>
-          <p className="mt-2 text-sm text-ink-soft">
-            Tell us the student&apos;s goal and we&apos;ll recommend the right
-            path.
+          <p className="mt-2 text-sm leading-relaxed text-leaf-100">
+            Tell us the student&apos;s goal and timeline — we&apos;ll recommend
+            the right path.
           </p>
           <a
             href={site.facebook}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 inline-flex w-fit items-center gap-2 rounded-full bg-leaf-600 px-4 py-2 text-sm font-semibold text-cream transition-colors hover:bg-leaf-700"
+            className="mt-5 inline-flex w-fit items-center gap-2 rounded-full bg-gold-500 px-4 py-2 text-sm font-semibold text-cream transition-colors hover:bg-gold-600"
           >
             <FacebookIcon className="h-4 w-4" />
             Ask us
@@ -257,7 +278,7 @@ function Approach() {
             key={s.title}
             className="relative rounded-2xl border border-leaf-100 bg-white p-6 shadow-card"
           >
-            <span className="font-display text-4xl font-semibold text-leaf-100">
+            <span className="font-display text-4xl font-semibold text-gold-500">
               0{i + 1}
             </span>
             <h3 className="mt-2 font-display text-lg font-semibold text-ink">

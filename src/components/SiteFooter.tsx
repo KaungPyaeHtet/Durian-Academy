@@ -8,8 +8,8 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2 lg:col-span-1">
           <div className="flex items-center gap-3">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-cream p-1.5">
-              <LogoMark size={34} className="h-full w-full object-contain" />
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-cream">
+              <LogoMark size={30} />
             </span>
             <span className="flex flex-col leading-none">
               <span className="font-display text-lg font-semibold text-cream">
