@@ -2,6 +2,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { FacebookIcon, Icon } from "@/components/icons";
 import { LogoMark } from "@/components/Logo";
+import { InterestForm } from "@/components/InterestForm";
 import {
   site,
   programs,
@@ -327,36 +328,34 @@ function Testimonials() {
 function Contact() {
   return (
     <section id="contact" className="mx-auto max-w-6xl px-5 py-20 lg:py-24">
-      <div className="overflow-hidden rounded-3xl border border-leaf-100 bg-hero p-8 shadow-card sm:p-12">
-        <div className="grid items-center gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-          <div>
-            <SectionHeading
-              eyebrow="Get started"
-              title="Ready to help your student aim higher?"
-              intro="Message us on Facebook and tell us the exam and timeline. We'll get back with a plan, class options and the next intake."
-            />
-          </div>
-          <div className="flex flex-col gap-3">
+      <div className="grid items-start gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+        <div>
+          <SectionHeading
+            eyebrow="Get started"
+            title="Register your interest"
+            intro="Fill in your details and our team will reach out with a study plan, class options and the next intake — no obligation."
+          />
+          <div className="mt-8 flex flex-col gap-3">
             <a
               href={site.facebook}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-leaf-600 px-6 py-3.5 text-sm font-semibold text-cream shadow-sm transition-colors hover:bg-leaf-700"
+              className="inline-flex w-fit items-center gap-2 rounded-full border border-leaf-300 px-5 py-2.5 text-sm font-semibold text-leaf-700 transition-colors hover:bg-white"
             >
               <FacebookIcon className="h-4 w-4" />
-              Message on Facebook
+              Or message us on Facebook
             </a>
-            <a
-              href={`mailto:${site.email}`}
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-leaf-300 px-6 py-3.5 text-sm font-semibold text-leaf-700 transition-colors hover:bg-white"
-            >
-              Email {site.email}
-            </a>
-            <p className="mt-1 text-center text-xs text-ink-soft">
+            <p className="text-sm text-ink-soft">
+              <span className="font-semibold text-ink">Email:</span> {site.email}
+            </p>
+            <p className="text-sm text-ink-soft">
+              <span className="font-semibold text-ink">Location:</span>{" "}
               {site.location}
             </p>
           </div>
         </div>
+
+        <InterestForm />
       </div>
     </section>
   );
