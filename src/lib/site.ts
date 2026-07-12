@@ -3,7 +3,7 @@ export const site = {
   tagline: "make it bold",
   facebook: "https://www.facebook.com/profile.php?id=61591489172634",
   // TODO: replace with real details
-  email: "hello@durianacademy.com",
+  email: "admin@durianacademy.com",
   phone: "+95 9 000 000 000",
   location: "Yangon, Myanmar",
 };
