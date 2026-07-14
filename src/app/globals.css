@@ -32,7 +32,7 @@
   /* Active body font — swapped at runtime by the dev font-switcher. */
   --font-active: var(--font-lexend);
   /* Active Myanmar font — swapped by the dev Myanmar-font switcher. */
-  --font-myanmar-active: var(--font-noto-serif-mm);
+  --font-myanmar-active: var(--font-padauk);
 }
 
 html {
