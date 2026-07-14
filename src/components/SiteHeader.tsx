@@ -22,8 +22,8 @@ export function SiteHeader() {
             <span className="font-display text-lg font-semibold tracking-tight text-leaf-600">
               {site.name}
             </span>
-            <span className="text-[11px] font-medium lowercase tracking-wide text-gold-500">
-              make it bold
+            <span className="text-[11px] font-medium tracking-wide text-gold-500">
+              make it BOLD
             </span>
           </span>
         </Link>

@@ -117,19 +117,9 @@ async function drawTeacherCard(
   if (!ctx) return null;
 
   const cx = W / 2;
-  // Use the site's actual Lexend font (pulled from the loaded page) on the
-  // canvas. Wait for fonts to be ready so the glyphs are available.
-  if (typeof document !== "undefined" && document.fonts?.ready) {
-    try {
-      await document.fonts.ready;
-    } catch {
-      /* ignore */
-    }
-  }
-  const family =
-    getComputedStyle(document.body).fontFamily || "'Lexend', sans-serif";
-  const serif = family;
-  const sans = family;
+  // Clean, neutral sans (RateMyProfessors style) — always available, no load.
+  const sans = "'Helvetica Neue', Helvetica, Arial, sans-serif";
+  const serif = sans;
 
   // background
   ctx.fillStyle = "#fbf7ef";
@@ -246,14 +236,10 @@ async function drawTeacherCard(
   ctx.moveTo(PAD, footY - 30);
   ctx.lineTo(W - PAD, footY - 30);
   ctx.stroke();
-  ctx.fillStyle = "#303c18";
-  ctx.font = `700 28px ${sans}`;
-  ctx.textAlign = "left";
-  ctx.fillText("DURIAN ACADEMY", PAD, footY);
   ctx.fillStyle = "#6b7842";
-  ctx.font = `500 26px ${sans}`;
-  ctx.textAlign = "right";
-  ctx.fillText(site.url.replace(/^https?:\/\//, ""), W - PAD, footY);
+  ctx.font = `600 28px ${sans}`;
+  ctx.textAlign = "center";
+  ctx.fillText(site.url.replace(/^https?:\/\//, ""), cx, footY);
 
   return new Promise((resolve) => canvas.toBlob((b) => resolve(b), "image/png"));
 }

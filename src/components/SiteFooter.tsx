@@ -15,8 +15,8 @@ export function SiteFooter() {
               <span className="font-display text-lg font-semibold text-cream">
                 {site.name}
               </span>
-              <span className="text-[11px] font-medium lowercase tracking-wide text-gold-300">
-                make it bold
+              <span className="text-[11px] font-medium tracking-wide text-gold-300">
+                make it BOLD
               </span>
             </span>
           </div>

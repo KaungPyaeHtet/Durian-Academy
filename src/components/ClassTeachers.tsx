@@ -7,6 +7,7 @@ import {
   type ClassTeacher,
   type TeacherReview,
 } from "@/lib/supabase";
+import { REVIEWS_ENABLED } from "@/lib/site";
 import { Markdown } from "@/components/Markdown";
 
 function Stars({ value, className = "" }: { value: number; className?: string }) {
@@ -204,6 +205,7 @@ function Reviews({
   const [error, setError] = useState("");
 
   const load = useCallback(async () => {
+    if (!REVIEWS_ENABLED) return;
     const db = getPublicSupabase();
     if (!db) return;
     const { data } = await db
@@ -285,6 +287,19 @@ function Reviews({
 
   const inputCls =
     "w-full rounded-lg border border-leaf-200 bg-white px-3 py-2 text-sm text-ink outline-none focus:border-gold-400";
+
+  if (!REVIEWS_ENABLED) {
+    return (
+      <div className="mt-4 rounded-2xl border border-leaf-100 bg-white p-6 text-center">
+        <p className="font-display text-lg font-semibold text-ink">
+          Reviews coming soon
+        </p>
+        <p className="mt-1 text-sm text-ink-soft">
+          Student ratings for this teacher will be available shortly.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-4 flex min-h-0 flex-1 flex-col rounded-2xl border border-leaf-100 bg-white p-4">

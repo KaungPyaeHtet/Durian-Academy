@@ -1,8 +1,13 @@
+// Flip to `true` once the teacher review system is ready to go live. While
+// false, the reviews page and the in-class review widget show "Coming soon"
+// and make no Supabase calls.
+export const REVIEWS_ENABLED = false;
+
 export const site = {
   name: "Durian Academy",
-  tagline: "make it bold",
+  tagline: "make it BOLD",
   url: "https://durianacademy.com",
-  facebook: "https://www.facebook.com/profile.php?id=61591489172634",
+  facebook: "https://www.facebook.com/durianacademy",
   messenger: "https://m.me/durianacademy",
   tiktok: "https://www.tiktok.com/@durianacademy",
   // TODO: replace with real details

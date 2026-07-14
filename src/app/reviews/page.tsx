@@ -10,6 +10,7 @@ import {
   type StaffItem,
   type TeacherReview,
 } from "@/lib/supabase";
+import { REVIEWS_ENABLED } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Teacher Reviews",
@@ -75,6 +76,22 @@ async function getData(): Promise<{
 }
 
 export default async function ReviewsPage() {
+  if (!REVIEWS_ENABLED) {
+    return (
+      <>
+        <SiteHeader />
+        <main className="flex-1">
+          <ComingSoon
+            eyebrow="Reviews"
+            title="Teacher reviews, coming soon"
+            description="We're putting the finishing touches on our review system. Soon you'll be able to see ratings and honest feedback from our students."
+          />
+        </main>
+        <SiteFooter />
+      </>
+    );
+  }
+
   const { teachers, classes } = await getData();
 
   return (

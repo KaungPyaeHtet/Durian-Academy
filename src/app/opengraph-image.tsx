@@ -44,7 +44,7 @@ export default function OgImage() {
               Durian Academy
             </span>
             <span style={{ fontSize: 22, color: "#78600c", fontWeight: 600 }}>
-              make it bold
+              make it BOLD
             </span>
           </div>
         </div>

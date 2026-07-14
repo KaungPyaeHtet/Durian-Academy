@@ -133,7 +133,7 @@ function Contact() {
           <SectionHeading
             eyebrow="Get started"
             title="Register your interest"
-            intro="Fill in your details and our team will reach out with a study plan, class options and the next intake — no obligation."
+            intro="Fill in your details and our team will reach out with a study plan and class options."
           />
           <div className="mt-8 flex flex-col gap-3">
             <p className="text-sm text-ink-soft">
