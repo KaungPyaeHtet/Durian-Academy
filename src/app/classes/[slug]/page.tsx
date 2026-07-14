@@ -5,9 +5,15 @@ import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { FacebookIcon } from "@/components/icons";
-import { getPublicSupabase, type ClassItem } from "@/lib/supabase";
+import {
+  getPublicSupabase,
+  type ClassItem,
+  type ClassTeacher,
+} from "@/lib/supabase";
 import { site } from "@/lib/site";
 import { Markdown } from "@/components/Markdown";
+import ClassTeachers from "@/components/ClassTeachers";
+import { ShareButton } from "@/components/ShareButton";
 
 export const revalidate = 60;
 
@@ -22,6 +28,18 @@ function fmtDate(d: string | null) {
     month: "long",
     year: "numeric",
   });
+}
+
+async function getClassTeachers(classId: string): Promise<ClassTeacher[]> {
+  const db = getPublicSupabase();
+  if (!db) return [];
+  const { data } = await db
+    .from("class_teachers")
+    .select("*, staff(*)")
+    .eq("class_id", classId)
+    .order("sort_order", { ascending: true });
+  // Only keep links whose teacher is published (RLS returns null otherwise).
+  return ((data as ClassTeacher[]) || []).filter((l) => l.staff);
 }
 
 async function getClass(key: string): Promise<ClassItem | null> {
@@ -74,6 +92,7 @@ export default async function ClassDetail({
   const c = await getClass(slug);
   if (!c) notFound();
 
+  const teachers = await getClassTeachers(c.id);
   const starts = fmtDate(c.starts_on);
   const facts: { label: string; value: string }[] = [];
   if (c.schedule) facts.push({ label: "Schedule", value: c.schedule });
@@ -136,6 +155,8 @@ export default async function ClassDetail({
             </dl>
           )}
 
+          {teachers.length > 0 && <ClassTeachers links={teachers} />}
+
           {c.description && (
             <div className="mt-8">
               <Markdown>{c.description}</Markdown>
@@ -158,6 +179,7 @@ export default async function ClassDetail({
               <FacebookIcon className="h-4 w-4" />
               Ask a question
             </a>
+            <ShareButton path={`/classes/${c.slug ?? c.id}`} />
           </div>
         </article>
       </main>

@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
-import { FacebookIcon } from "./icons";
 import { LogoMark } from "./Logo";
+import MobileNav from "./MobileNav";
 
 const nav = [
   { href: "/", label: "Home" },
   { href: "/classes", label: "Classes" },
   { href: "/products", label: "Products" },
-  { href: "/staff", label: "Staff" },
+  { href: "/reviews", label: "Reviews" },
+  { href: "/core", label: "Core" },
   { href: "/#contact", label: "Contact" },
 ];
 
@@ -44,15 +45,7 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <a
-          href={site.facebook}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full bg-leaf-600 px-4 py-2 text-sm font-semibold text-cream shadow-sm transition-colors hover:bg-leaf-700"
-        >
-          <FacebookIcon className="h-4 w-4" />
-          Message us
-        </a>
+        <MobileNav nav={nav} />
       </div>
     </header>
   );

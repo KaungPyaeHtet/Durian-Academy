@@ -6,13 +6,21 @@ type Payload = {
   name?: string;
   email?: string;
   phone?: string;
+  telegram?: string;
   program?: string;
   message?: string;
   // honeypot — real users never fill this
   website?: string;
 };
 
-const MAX = { name: 100, email: 150, phone: 40, program: 60, message: 1500 };
+const MAX = {
+  name: 100,
+  email: 150,
+  phone: 40,
+  telegram: 60,
+  program: 120,
+  message: 1500,
+};
 
 function clean(v: unknown, max: number) {
   return typeof v === "string" ? v.trim().slice(0, max) : "";
@@ -43,12 +51,16 @@ export async function POST(req: Request) {
   const name = clean(body.name, MAX.name);
   const email = clean(body.email, MAX.email);
   const phone = clean(body.phone, MAX.phone);
+  const telegram = clean(body.telegram, MAX.telegram);
   const program = clean(body.program, MAX.program);
   const message = clean(body.message, MAX.message);
 
-  if (!name || (!email && !phone)) {
+  if (!name || (!email && !phone && !telegram)) {
     return NextResponse.json(
-      { error: "Please provide your name and at least one way to reach you." },
+      {
+        error:
+          "Please provide your name and at least one way to reach you (Telegram, email or phone).",
+      },
       { status: 400 },
     );
   }
@@ -62,9 +74,10 @@ export async function POST(req: Request) {
 
   const fields = [
     { name: "Name", value: name, inline: true },
-    { name: "Program", value: program || "—", inline: true },
+    { name: "Interested in", value: program || "—", inline: true },
     { name: "Email", value: email || "—", inline: true },
     { name: "Phone", value: phone || "—", inline: true },
+    { name: "Telegram", value: telegram || "—", inline: true },
     { name: "Message", value: message || "—", inline: false },
   ];
 

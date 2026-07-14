@@ -19,7 +19,7 @@ export function slugify(input: string): string {
  */
 export async function uniqueSlug(
   db: SupabaseClient,
-  table: "classes" | "products",
+  table: "classes" | "products" | "staff",
   title: string,
   excludeId?: string,
 ): Promise<string> {

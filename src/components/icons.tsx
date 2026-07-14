@@ -22,6 +22,22 @@ export function FacebookIcon({ className }: IconProps) {
   );
 }
 
+export function MessengerIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" fill="currentColor">
+      <path d="M12 0C5.373 0 0 4.974 0 11.111c0 3.497 1.745 6.616 4.472 8.652V24l4.086-2.242c1.09.301 2.246.464 3.442.464 6.627 0 12-4.974 12-11.111C24 4.974 18.627 0 12 0zm1.193 14.963l-3.056-3.259-5.963 3.259L10.733 8l3.13 3.259L19.752 8l-6.559 6.963z" />
+    </svg>
+  );
+}
+
+export function TikTokIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" fill="currentColor">
+      <path d="M16.5 2h-3v13.4a2.7 2.7 0 11-2.1-2.63V9.7A6 6 0 1017.4 15.4V8.53a7 7 0 004.1 1.32V6.78a3.9 3.9 0 01-2.9-1.32A3.9 3.9 0 0116.5 2z" />
+    </svg>
+  );
+}
+
 const paths: Record<string, string> = {
   academic:
     "M12 3L2 8l10 5 8-4v6h2V8L12 3zm0 12L5 11.5V15c0 1.66 3.13 3 7 3s7-1.34 7-3v-3.5L12 15z",

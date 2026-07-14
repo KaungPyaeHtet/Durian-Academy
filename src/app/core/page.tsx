@@ -7,7 +7,7 @@ import { Markdown } from "@/components/Markdown";
 import { getPublicSupabase, type StaffItem } from "@/lib/supabase";
 
 export const metadata: Metadata = {
-  title: "Teachers & Staff",
+  title: "Teachers & Core",
   description:
     "Meet the instructors and team behind Durian Academy — experienced teachers guiding students through AP, SAT, IGCSE, A-Levels and Myanmar G12.",
 };
@@ -17,12 +17,16 @@ export const revalidate = 60; // ISR
 async function getStaff(): Promise<StaffItem[]> {
   const db = getPublicSupabase();
   if (!db) return [];
+  // Only the core members are listed publicly (max 6). Teachers (kind='teacher')
+  // stay hidden here — they surface inside their classes instead.
   const { data } = await db
     .from("staff")
     .select("*")
     .eq("published", true)
+    .eq("kind", "core")
     .order("sort_order", { ascending: true })
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .limit(6);
   return (data as StaffItem[]) || [];
 }
 
@@ -43,9 +47,9 @@ export default async function TeachersPage() {
       <main className="flex-1">
         {staff.length === 0 ? (
           <ComingSoon
-            eyebrow="Teachers & Staff"
-            title="Meet our team, coming soon"
-            description="We're preparing profiles of the instructors and team behind Durian Academy. Check back soon."
+            eyebrow="Our people"
+            title="Meet our Durian core, coming soon"
+            description="We're preparing profiles of the team behind Durian Academy. Check back soon."
           />
         ) : (
           <section className="mx-auto max-w-6xl px-5 py-16 lg:py-20">
@@ -53,10 +57,10 @@ export default async function TeachersPage() {
               Our people
             </p>
             <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
-              Teachers &amp; staff
+              Meet our Durian core
             </h1>
             <p className="mt-4 max-w-xl text-lg text-ink-soft">
-              The experienced instructors and team guiding our students.
+              The team leading Durian Academy and guiding our students.
             </p>
 
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

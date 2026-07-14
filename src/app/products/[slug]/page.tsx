@@ -8,6 +8,7 @@ import { FacebookIcon } from "@/components/icons";
 import { getPublicSupabase, type ProductItem } from "@/lib/supabase";
 import { site } from "@/lib/site";
 import { Markdown } from "@/components/Markdown";
+import { ShareButton } from "@/components/ShareButton";
 
 export const revalidate = 60;
 
@@ -132,6 +133,7 @@ export default async function ProductDetail({
               <FacebookIcon className="h-4 w-4" />
               Ask a question
             </a>
+            <ShareButton path={`/products/${p.slug ?? p.id}`} />
           </div>
         </article>
       </main>

@@ -1,21 +1,56 @@
 "use client";
 
-import { useState } from "react";
-import { programs } from "@/lib/site";
+import { useEffect, useState } from "react";
+import { getPublicSupabase } from "@/lib/supabase";
 
 type Status = "idle" | "sending" | "success" | "error";
 
 export function InterestForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  const [classes, setClasses] = useState<string[]>([]);
+  const [products, setProducts] = useState<string[]>([]);
+
+  // Populate the dropdown from the live classes & products.
+  useEffect(() => {
+    const db = getPublicSupabase();
+    if (!db) return;
+    (async () => {
+      const [c, p] = await Promise.all([
+        db
+          .from("classes")
+          .select("title")
+          .eq("published", true)
+          .order("created_at", { ascending: false }),
+        db
+          .from("products")
+          .select("title")
+          .eq("published", true)
+          .order("created_at", { ascending: false }),
+      ]);
+      setClasses(((c.data as { title: string }[]) || []).map((r) => r.title));
+      setProducts(((p.data as { title: string }[]) || []).map((r) => r.title));
+    })();
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setStatus("sending");
-    setError("");
 
     const form = e.currentTarget;
     const data = Object.fromEntries(new FormData(form).entries());
+
+    // Require at least one way to reach the person.
+    const hasContact = [data.email, data.phone, data.telegram].some(
+      (v) => typeof v === "string" && v.trim() !== ""
+    );
+    if (!hasContact) {
+      setError("Add a Telegram, email or phone so we can reach you.");
+      setStatus("error");
+      return;
+    }
+
+    setStatus("sending");
+    setError("");
 
     try {
       const res = await fetch("/api/interest", {
@@ -88,16 +123,29 @@ export function InterestForm() {
           />
         </Field>
 
-        <Field label="Program of interest">
+        <Field label="Interested in">
           <select name="program" defaultValue="" className={inputCls}>
             <option value="" disabled>
-              Select a program
+              Select a class or product
             </option>
-            {programs.map((p) => (
-              <option key={p.code} value={p.name}>
-                {p.name}
-              </option>
-            ))}
+            {classes.length > 0 && (
+              <optgroup label="Classes">
+                {classes.map((title) => (
+                  <option key={`c-${title}`} value={title}>
+                    {title}
+                  </option>
+                ))}
+              </optgroup>
+            )}
+            {products.length > 0 && (
+              <optgroup label="Products & services">
+                {products.map((title) => (
+                  <option key={`p-${title}`} value={title}>
+                    {title}
+                  </option>
+                ))}
+              </optgroup>
+            )}
             <option value="Not sure yet">Not sure yet</option>
           </select>
         </Field>
@@ -121,6 +169,15 @@ export function InterestForm() {
             className={inputCls}
           />
         </Field>
+
+        <Field label="Telegram">
+          <input
+            name="telegram"
+            maxLength={60}
+            placeholder="@username"
+            className={inputCls}
+          />
+        </Field>
       </div>
 
       <div className="mt-4">
@@ -136,7 +193,7 @@ export function InterestForm() {
       </div>
 
       <p className="mt-3 text-xs text-ink-soft">
-        Provide at least an email or phone so we can reach you.
+        Provide at least a Telegram, email or phone so we can reach you.
       </p>
 
       {status === "error" && (

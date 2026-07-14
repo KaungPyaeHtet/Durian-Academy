@@ -1,17 +1,24 @@
 export const site = {
   name: "Durian Academy",
   tagline: "make it bold",
+  url: "https://durianacademy.com",
   facebook: "https://www.facebook.com/profile.php?id=61591489172634",
+  messenger: "https://m.me/durianacademy",
+  tiktok: "https://www.tiktok.com/@durianacademy",
   // TODO: replace with real details
   email: "admin@durianacademy.com",
   phone: "+95 9 000 000 000",
   location: "Yangon, Myanmar",
 };
 
+// `logo` points to an official curriculum logo in /public/logos. Drop the real
+// files there using these exact names; until then the card falls back to the
+// numbered badge automatically.
 export const programs = [
   {
     code: "AP",
     name: "Advanced Placement",
+    logo: "/logos/ap.svg",
     blurb:
       "College-level courses and exams recognised by universities worldwide. Calculus, Physics, Chemistry, Biology, Economics and more.",
     tags: ["College Board", "1–5 scoring"],
@@ -19,6 +26,7 @@ export const programs = [
   {
     code: "SAT",
     name: "SAT",
+    logo: "/logos/sat.svg",
     blurb:
       "Digital SAT preparation covering Reading & Writing and Math, with full-length practice tests and targeted score strategies.",
     tags: ["Digital SAT", "1600 scale"],
@@ -26,6 +34,7 @@ export const programs = [
   {
     code: "IGCSE",
     name: "IGCSE",
+    logo: "/logos/igcse.svg",
     blurb:
       "Cambridge & Edexcel IGCSE across the sciences, mathematics, English and business — the foundation for A-Levels.",
     tags: ["Cambridge", "Edexcel"],
@@ -33,6 +42,7 @@ export const programs = [
   {
     code: "A-Level",
     name: "A-Levels",
+    logo: "/logos/a-level.svg",
     blurb:
       "AS & A2 preparation with depth in Maths, Further Maths, Physics, Chemistry, Biology and Economics for top university entry.",
     tags: ["AS & A2", "University entry"],
@@ -40,9 +50,53 @@ export const programs = [
   {
     code: "G12",
     name: "Myanmar G12",
+    logo: "/logos/g12.svg",
     blurb:
       "Grade 12 matriculation support aligned to the national curriculum, helping students excel in the exams that matter at home.",
     tags: ["National curriculum", "Matriculation"],
+  },
+];
+
+// Seniors available for 1-on-1 consultation. Each `bookingUrl` opens the
+// person's real scheduling page (Google Calendar / Cal.com / Calendly), where
+// the actual available times are shown.
+export type Senior = {
+  id: string;
+  name: string;
+  role: string;
+  provider: string;
+  bookingUrl: string;
+  blurb: string;
+};
+
+export const seniors: Senior[] = [
+  {
+    id: "aung-khant-paing",
+    name: "Aung Khant Paing",
+    role: "15-min free consultation",
+    provider: "Google Calendar",
+    bookingUrl: "https://calendar.app.google/Mkr6B9D9L4zN8sSe9",
+    blurb:
+      "တက္ကသိုလ်ဝင်ခွင့်လျှောက်ပုံ၊ AP courses နဲ့ Stanford သို့ Transfer လုပ်ခဲ့ပုံတွေကို တိုင်ပင်ပေးနိုင်ပါတယ်။",
+  },
+  {
+    id: "kaung-pyae-htet",
+    name: "Kaung Pyae Htet",
+    role: "15-min free consultation",
+    provider: "Cal.com",
+    bookingUrl:
+      "https://cal.com/kaungpyaehtet/durianacademy-s-kaung-pyae-htet-appointment",
+    blurb:
+      "IGCSE/A-Level၊ Hackathon/Tech Experience နဲ့ NUS ရဲ့ ASEAN Scholarship လျှောက်ခဲ့ပုံတွေကို လမ်းပြပေးနိုင်ပါတယ်။",
+  },
+  {
+    id: "min-kyal-sin-thant",
+    name: "Min Kyal Sin Thant",
+    role: "15-min free consultation",
+    provider: "Calendly",
+    bookingUrl: "https://calendly.com/mksthant-durianacademy/15min",
+    blurb:
+      "မြန်မာ ၁၂ တန်းသင်ရိုးနဲ့ NUS (စင်္ကာပူ) ရဲ့ ASEAN Scholarship လျှောက်ခဲ့တဲ့ နည်းနာတွေကို တိုင်ပင်ပေးနိုင်ပါတယ်။",
   },
 ];
 

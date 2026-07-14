@@ -32,15 +32,50 @@ export type ClassItem = {
 
 export type StaffItem = {
   id: string;
+  slug: string | null;
   name: string;
   role: string | null; // e.g. "Founder & Instructor"
   subjects: string | null; // e.g. "AP Calculus, Physics"
   bio: string | null;
   image_url: string | null;
   sort_order: number | null;
+  kind: "core" | "teacher"; // 'core' shows on /core; 'teacher' is hidden there
+  rating_sum: number;
+  rating_count: number;
   published: boolean;
   created_at: string;
   updated_at: string;
+};
+
+// A public teacher review (from the `teacher_reviews` view — no email exposed).
+export type TeacherReview = {
+  id: string;
+  teacher_id: string;
+  name: string | null; // null => posted anonymously
+  stars: number;
+  review: string | null;
+  created_at: string;
+};
+
+// A review access code (handed to enrolled students, scoped to one class).
+export type ReviewCode = {
+  id: string;
+  code: string;
+  class_id: string;
+  label: string | null;
+  active: boolean;
+  created_at: string;
+};
+
+// A class↔teacher link row. `staff` is present when the query joins it in.
+export type ClassTeacher = {
+  id: string;
+  class_id: string;
+  teacher_id: string;
+  subjects: string | null; // subjects this teacher covers in this class
+  sort_order: number | null;
+  created_at: string;
+  staff?: StaffItem | null;
 };
 
 export type ProductItem = {

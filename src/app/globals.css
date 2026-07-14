@@ -22,10 +22,17 @@
   --color-gold-500: #78600c; /* brand gold */
   --color-gold-600: #5f4c0a;
 
-  --font-sans: var(--font-sans), system-ui, sans-serif;
+  --font-sans: var(--font-active), system-ui, sans-serif;
   --font-display: var(--font-display), Georgia, serif;
 
   --shadow-card: 0 1px 2px rgba(20, 35, 27, 0.04), 0 12px 32px -12px rgba(20, 35, 27, 0.18);
+}
+
+:root {
+  /* Active body font — swapped at runtime by the dev font-switcher. */
+  --font-active: var(--font-lexend);
+  /* Active Myanmar font — swapped by the dev Myanmar-font switcher. */
+  --font-myanmar-active: var(--font-noto-serif-mm);
 }
 
 html {
@@ -39,6 +46,10 @@ body {
 
 .font-display {
   font-family: var(--font-display);
+}
+
+.font-myanmar {
+  font-family: var(--font-myanmar-active), var(--font-display);
 }
 
 /* Subtle tropical gradient helper for the hero */

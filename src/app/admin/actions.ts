@@ -13,12 +13,22 @@ import {
 import { getAdminSupabase } from "@/lib/supabaseAdmin";
 import { uploadImage } from "@/lib/storage";
 import { uniqueSlug } from "@/lib/slug";
+import { randomBytes } from "crypto";
 import type { SupabaseClient } from "@supabase/supabase-js";
+
+// Readable random code (no ambiguous chars like O/0, I/1).
+function randomCode(len = 6) {
+  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const bytes = randomBytes(len);
+  let out = "";
+  for (let i = 0; i < len; i++) out += alphabet[bytes[i] % alphabet.length];
+  return out;
+}
 
 /** On create, generate a slug. On edit, keep the existing one stable unless it's missing. */
 async function ensureSlug(
   db: SupabaseClient,
-  table: "classes" | "products",
+  table: "classes" | "products" | "staff",
   id: string,
   title: string,
 ): Promise<string | undefined> {
@@ -172,6 +182,7 @@ export async function deleteProduct(formData: FormData) {
 export async function saveStaff(formData: FormData) {
   await requireAuth();
   const id = str(formData.get("id"));
+  const kind = str(formData.get("kind")) === "teacher" ? "teacher" : "core";
   const row = {
     name: str(formData.get("name")),
     role: orNull(str(formData.get("role"))),
@@ -179,17 +190,96 @@ export async function saveStaff(formData: FormData) {
     bio: orNull(str(formData.get("bio"), LONG)),
     image_url: await resolveImage(formData, "staff"),
     sort_order: numOrNull(formData.get("sort_order")) ?? 0,
+    kind,
     published: formData.get("published") === "on",
   };
   if (!row.name) redirect("/admin?error=name");
 
   const db = getAdminSupabase();
+  const slug = await ensureSlug(db, "staff", id, row.name);
+  const payload = slug ? { ...row, slug } : row;
   const res = id
-    ? await db.from("staff").update(row).eq("id", id)
-    : await db.from("staff").insert(row);
+    ? await db.from("staff").update(payload).eq("id", id)
+    : await db.from("staff").insert(payload);
   if (res.error) throw new Error(res.error.message);
 
-  revalidatePath("/staff");
+  revalidatePath("/core");
+  revalidatePath("/classes/[slug]", "page"); // teacher edits show inside classes
+  revalidatePath("/reviews");
+  revalidatePath("/admin");
+  redirect("/admin");
+}
+
+// ---------- class ↔ teacher links ----------
+export async function addClassTeacher(formData: FormData) {
+  await requireAuth();
+  const class_id = str(formData.get("class_id"));
+  const teacher_id = str(formData.get("teacher_id"));
+  if (!class_id || !teacher_id) redirect("/admin");
+
+  const row = {
+    class_id,
+    teacher_id,
+    subjects: orNull(str(formData.get("subjects"))),
+    sort_order: numOrNull(formData.get("sort_order")) ?? 0,
+  };
+  // upsert on (class_id, teacher_id) so re-adding just updates the subjects
+  const { error } = await getAdminSupabase()
+    .from("class_teachers")
+    .upsert(row, { onConflict: "class_id,teacher_id" });
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/classes");
+  revalidatePath("/classes/[slug]", "page"); // refresh every class detail page
+  revalidatePath("/admin");
+  redirect("/admin");
+}
+
+export async function removeClassTeacher(formData: FormData) {
+  await requireAuth();
+  const id = str(formData.get("id"));
+  if (id) {
+    const { error } = await getAdminSupabase()
+      .from("class_teachers")
+      .delete()
+      .eq("id", id);
+    if (error) throw new Error(error.message);
+  }
+  revalidatePath("/classes");
+  revalidatePath("/classes/[slug]", "page");
+  revalidatePath("/admin");
+  redirect("/admin");
+}
+
+// ---------- review access codes ----------
+export async function generateReviewCodes(formData: FormData) {
+  await requireAuth();
+  const class_id = str(formData.get("class_id"));
+  if (!class_id) redirect("/admin");
+  const count = Math.min(Math.max(numOrNull(formData.get("count")) ?? 1, 1), 50);
+  const label = orNull(str(formData.get("label")));
+
+  const rows = Array.from({ length: count }, () => ({
+    class_id,
+    code: randomCode(6),
+    label,
+  }));
+  const { error } = await getAdminSupabase().from("review_codes").insert(rows);
+  if (error) throw new Error(error.message);
+  revalidatePath("/admin");
+  redirect("/admin");
+}
+
+export async function deleteReviewCode(formData: FormData) {
+  await requireAuth();
+  const id = str(formData.get("id"));
+  if (id) {
+    const { error } = await getAdminSupabase()
+      .from("review_codes")
+      .delete()
+      .eq("id", id);
+    if (error) throw new Error(error.message);
+  }
   revalidatePath("/admin");
   redirect("/admin");
 }
@@ -201,7 +291,7 @@ export async function deleteStaff(formData: FormData) {
     const { error } = await getAdminSupabase().from("staff").delete().eq("id", id);
     if (error) throw new Error(error.message);
   }
-  revalidatePath("/staff");
+  revalidatePath("/core");
   revalidatePath("/admin");
   redirect("/admin");
 }
