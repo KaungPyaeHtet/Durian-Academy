@@ -74,9 +74,9 @@ const orgJsonLd = {
   name: "Durian Academy",
   alternateName: "ဒူးရင်းသီး အကယ်ဒမီ",
   url: SITE_URL,
-  slogan: "Make it bold.",
+  slogan: "Make it BOLD.",
   description:
-    "Exam preparation (AP, SAT, IGCSE, A-Level, Myanmar G12) and study-abroad / scholarship guidance for Myanmar students.",
+    "Advanced Placement (AP) preparation and study-abroad / scholarship guidance for Myanmar students.",
   areaServed: "MM",
   address: {
     "@type": "PostalAddress",
@@ -84,23 +84,22 @@ const orgJsonLd = {
     addressCountry: "MM",
   },
   sameAs: [
-    "https://www.facebook.com/profile.php?id=61591489172634",
+    "https://www.facebook.com/durianacademy",
     "https://www.tiktok.com/@durianacademy",
   ],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Programs",
     itemListElement: [
-      "Advanced Placement (AP)",
-      "SAT",
-      "IGCSE",
-      "A-Level",
-      "Myanmar G12",
-    ].map((name) => ({
-      "@type": "Course",
-      name,
-      provider: { "@type": "EducationalOrganization", name: "Durian Academy" },
-    })),
+      {
+        "@type": "Course",
+        name: "Advanced Placement (AP)",
+        provider: {
+          "@type": "EducationalOrganization",
+          name: "Durian Academy",
+        },
+      },
+    ],
   },
 };
 
@@ -108,41 +107,35 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default:
-      "Durian Academy — AP, SAT, IGCSE, A-Level & Myanmar G12 Tuition | Study Abroad Prep",
+      "Durian Academy — Advanced Placement (AP) Prep for Myanmar Students",
     template: "%s | Durian Academy",
   },
   description:
-    "Durian Academy helps Myanmar students prepare for AP, SAT, IGCSE, A-Level and Myanmar G12 exams and apply to top universities abroad — with experienced instructors, small classes and scholarship guidance (incl. NUS ASEAN Scholarship).",
+    "Durian Academy helps Myanmar students master Advanced Placement (AP) courses and apply to top universities abroad, with experienced instructors and small classes.",
   keywords: [
-    // Programs / exams students search for
+    // AP-focused for launch
     "AP tutoring Myanmar",
-    "SAT prep Yangon",
-    "SAT preparation Myanmar",
-    "IGCSE tuition Yangon",
-    "IGCSE Myanmar",
-    "A Level tuition Myanmar",
-    "Myanmar G12",
-    "Grade 12 matriculation",
-    "exam preparation Myanmar",
+    "Advanced Placement Myanmar",
+    "AP prep Yangon",
+    "College Board AP",
+    "AP Calculus Myanmar",
     // Study abroad / scholarships
     "study abroad Myanmar",
     "university admission Myanmar",
     "ASEAN scholarship",
     "NUS ASEAN Undergraduate Scholarship",
-    "scholarships for Burmese students",
     // Brand + Burmese-language terms
     "Durian Academy",
     "ဒူးရင်းသီး အကယ်ဒမီ",
     "နိုင်ငံခြားပညာသင်",
     "ကျောင်းလျှောက်",
     "AP သင်တန်း",
-    "SAT သင်တန်း",
   ],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Durian Academy — Exam Prep & Study-Abroad Guidance for Myanmar Students",
+    title: "Durian Academy — Advanced Placement (AP) Prep for Myanmar Students",
     description:
-      "AP, SAT, IGCSE, A-Level and Myanmar G12 preparation plus university admissions and scholarship guidance for Myanmar students.",
+      "Master AP courses and apply to top universities abroad with Durian Academy.",
     url: SITE_URL,
     siteName: "Durian Academy",
     locale: "my_MM",
@@ -151,9 +144,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Durian Academy — Exam Prep for Myanmar Students",
+    title: "Durian Academy — Advanced Placement (AP) Prep",
     description:
-      "AP, SAT, IGCSE, A-Level and Myanmar G12 prep plus study-abroad and scholarship guidance.",
+      "AP courses and study-abroad guidance for Myanmar students.",
   },
 };
 

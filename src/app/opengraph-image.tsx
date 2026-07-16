@@ -59,15 +59,15 @@ export default function OgImage() {
               maxWidth: 900,
             }}
           >
-            Exam prep & study-abroad guidance for Myanmar students
+            Advanced Placement prep for Myanmar students
           </span>
           <span style={{ fontSize: 30, color: "#4a5233" }}>
-            AP · SAT · IGCSE · A-Level · Myanmar G12 · Scholarships
+            AP · College Board · Study-abroad guidance
           </span>
         </div>
 
         <div style={{ display: "flex", gap: 14 }}>
-          {["AP", "SAT", "IGCSE", "A-Level", "G12"].map((t) => (
+          {["AP", "College Board", "1–5 scoring"].map((t) => (
             <span
               key={t}
               style={{
