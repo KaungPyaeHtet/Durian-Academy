@@ -107,11 +107,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default:
-      "Durian Academy — Advanced Placement (AP) Prep for Myanmar Students",
+      "Durian Academy — Quality Teaching & Study-Abroad Guidance for Myanmar Students",
     template: "%s | Durian Academy",
   },
   description:
-    "Durian Academy helps Myanmar students master Advanced Placement (AP) courses and apply to top universities abroad, with experienced instructors and small classes.",
+    "Durian Academy supports Myanmar students with quality teachers, classes and products for students and teachers, plus guidance to study at top universities abroad.",
   keywords: [
     // AP-focused for launch
     "AP tutoring Myanmar",
@@ -133,9 +133,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Durian Academy — Advanced Placement (AP) Prep for Myanmar Students",
+    title: "Durian Academy — Quality Teaching for Myanmar Students",
     description:
-      "Master AP courses and apply to top universities abroad with Durian Academy.",
+      "Quality teachers, classes and study-abroad guidance for Myanmar students.",
     url: SITE_URL,
     siteName: "Durian Academy",
     locale: "my_MM",
@@ -144,9 +144,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Durian Academy — Advanced Placement (AP) Prep",
+    title: "Durian Academy — Quality Teaching for Myanmar Students",
     description:
-      "AP courses and study-abroad guidance for Myanmar students.",
+      "Quality teachers, classes and study-abroad guidance for Myanmar students.",
   },
 };
 

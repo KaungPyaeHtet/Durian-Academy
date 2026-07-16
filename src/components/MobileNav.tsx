@@ -37,7 +37,7 @@ export default function MobileNav({ nav }: { nav: NavItem[] }) {
           <nav className="mx-auto flex max-w-6xl flex-col px-5 py-2">
             {nav.map((item) => {
               const cls =
-                "block rounded-lg px-2 py-3 text-base font-medium text-ink hover:bg-leaf-50 hover:text-leaf-600";
+                "font-myanmar block rounded-lg px-2 py-3 text-base font-semibold text-ink hover:bg-leaf-50 hover:text-leaf-600";
               return item.href.includes("#") ? (
                 <a
                   key={item.href}

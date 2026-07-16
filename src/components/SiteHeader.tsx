@@ -4,12 +4,12 @@ import { LogoMark } from "./Logo";
 import MobileNav from "./MobileNav";
 
 const nav = [
-  { href: "/", label: "Home" },
-  { href: "/classes", label: "Classes" },
-  { href: "/products", label: "Products" },
-  { href: "/reviews", label: "Reviews" },
-  { href: "/core", label: "Core" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/", label: "ပင်မစာမျက်နှာ" },
+  { href: "/classes", label: "အတန်းများ" },
+  { href: "/products", label: "ဝန်ဆောင်မှုများ" },
+  { href: "/reviews", label: "သုံးသပ်ချက်" },
+  { href: "/core", label: "ဗဟိုအဖွဲ့" },
+  { href: "/#contact", label: "ဆက်သွယ်ရန်" },
 ];
 
 export function SiteHeader() {
@@ -31,7 +31,7 @@ export function SiteHeader() {
         <nav className="hidden items-center gap-8 md:flex">
           {nav.map((item) => {
             const cls =
-              "text-sm font-medium text-ink-soft transition-colors hover:text-leaf-600";
+              "font-myanmar text-sm font-semibold text-ink transition-colors hover:text-leaf-600";
             // hash links scroll within a page; route links use client navigation
             return item.href.includes("#") ? (
               <a key={item.href} href={item.href} className={cls}>
